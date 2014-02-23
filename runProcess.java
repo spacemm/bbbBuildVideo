@@ -14,9 +14,9 @@ public class runProcess {
         pb.redirectErrorStream(true);
         pb.redirectInput(ProcessBuilder.Redirect.PIPE); //optional, default behavior
         pb.redirectOutput(encodingFile);
-        //pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         Process p;
-        //pb.inheritIO();
+        pb.inheritIO();
         p = pb.start();
         p.waitFor();
         encodingFile.delete();

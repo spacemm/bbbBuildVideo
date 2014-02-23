@@ -31,20 +31,19 @@ public class bbbBuildVideo {
         Map<String,Long> videoStop= new HashMap<String,Long>();
         Long startTime = (long) 0;
         Long stopTime = (long) 0;
-        String tmpPath="/tmp";
-        tmpPath=tmpPath+"/";
+        String tmpPath="/tmp/";
         String tmp="/tmp/"+id+"/";
         String exe="/bin/sh";
-        String getdate="getdata.sh";
+        String getdata="getdata.sh";
         //bbbLoadRedis.RedisConnector(server,6379);
         //bbbLoadRedis.RedisConnector("10.1.1.11",6379);
-        System.out.println(bbbLoadRedis.events_for(id));
-        if (bbbLoadRedis.events_for(id).size()<1){
+        //System.out.println(bbbLoadRedis.events_for(id));
+        /*if (bbbLoadRedis.events_for(id).size()<1){
             System.out.println("No id in Redis");
             System.exit(1);
             //return;
-        }
-        extractScripts.doIt(getdate, "/tmp/");
+        }*/
+        extractScripts.doIt(getdata, "/tmp/");
 
 
         String concatWebCamAndSlides="concatWebCamAndSlides.sh";
@@ -58,7 +57,7 @@ public class bbbBuildVideo {
         String concatSlides="concatSlides.sh";
         String convert_pdf_to_png="convert_pdf_to_png.sh";
         String changeRESofVIDEO="changeRESofVIDEO.sh";
-/*
+
         extractScripts.doIt(concatChat, "/tmp/");
         extractScripts.doIt(concatSlides, "/tmp/");
         extractScripts.doIt(create_videos_from_text, "/tmp/");
@@ -68,18 +67,19 @@ public class bbbBuildVideo {
         extractScripts.doIt(create_videos_from_slides, "/tmp/");
         extractScripts.doIt(convert_pdf_to_png, "/tmp/");
         extractScripts.doIt(changeRESofVIDEO, "/tmp/");
-*/
 
-        /*try {
-            runProcess.runNameTwoParams(getdate, exe, id, server);
+
+        try {
+            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.221");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }*/
-        for(String msg : bbbLoadRedis.events_for(id)){
-            Map<String,String> map=bbbLoadRedis.events_info_for(id, msg);
+        }
+        LinkedList<HashMap<String, String>> dataList = getDataFromJson.getLOG(id);
+        System.out.println(dataList);
+        for( HashMap<String, String> map : dataList){
             //System.out.println(map);
             if (map.containsKey("eventName") && map.containsValue("StartRecordingEvent")){
-                System.out.println(map);
+                System.out.println("MAP::"+ map);
                 for (Map.Entry entry : map.entrySet()) {
                     if (entry.getKey().toString().equalsIgnoreCase("timestamp")){
                         startTime = Long.valueOf(entry.getValue().toString());
@@ -194,7 +194,7 @@ public class bbbBuildVideo {
         float lenght = (float) 0.0;
         long currentTime= (long) 0.0;
         String msg ="";
-/*        for (Map.Entry entry : sorted_chat.entrySet()) {
+        for (Map.Entry entry : sorted_chat.entrySet()) {
             if (currentTime>0.0){
                 lenght=Float.valueOf(Long.valueOf(entry.getKey().toString())-currentTime);
                 System.out.println(currentTime+" "+Long.valueOf(entry.getKey().toString()));
@@ -284,9 +284,9 @@ public class bbbBuildVideo {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             currentTime=Long.valueOf(entry.getKey().toString());
-        }*/
+        }
         //Add black to video from begin
-/*        try {
+        try {
             runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, "320x240");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -353,7 +353,7 @@ public class bbbBuildVideo {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             p.waitFor();
-        }*/
+        }
         System.out.println("start:" + startTime + " stop:" + stopTime + " long:" + totallong);
         try {
             runProcess.runName(concatChat,id,exe);
@@ -365,11 +365,11 @@ public class bbbBuildVideo {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-/*        try {
+        try {
             runProcess.runNameTwoParams(concatwebcams, exe, id, String.valueOf(videoStart.size()));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }*/
+        }
         List<Map<String, List<Long>>> slots = videoSlot(videoStart, videoStop,startTime,stopTime);
         if(slots.size()>6){
 
