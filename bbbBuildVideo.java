@@ -4,10 +4,10 @@ import java.util.*;
 public class bbbBuildVideo {
     public static void main(String[] args) throws InterruptedException {
 //        String id="";
-        String server = null;
+//        String server = null;
         //String pathToRecord = "/tmp/";
         String id = null;
-        if (System.getProperty("server") != null) {
+        if (System.getProperty("id") != null) {
             try {
                 id = System.getProperty("id");
             } catch (Exception e) {
@@ -15,14 +15,14 @@ public class bbbBuildVideo {
                 return;
             }
         }
-        if (System.getProperty("server") != null) {
+ /*       if (System.getProperty("server") != null) {
             try {
                 server = System.getProperty("server");
             } catch (Exception e) {
                 System.out.println("You must specify the server name or ip!");
                 return;
             }
-        }
+        }*/
 
         Map<Long,String> chat = new HashMap<Long, String>();
         Map<Long,String> presentation = new HashMap<Long, String>();
@@ -36,7 +36,7 @@ public class bbbBuildVideo {
         String tmp="/tmp/"+id+"/";
         String exe="/bin/sh";
         String getdate="getdata.sh";
-        bbbLoadRedis.RedisConnector(server,6379);
+        //bbbLoadRedis.RedisConnector(server,6379);
         //bbbLoadRedis.RedisConnector("10.1.1.11",6379);
         System.out.println(bbbLoadRedis.events_for(id));
         if (bbbLoadRedis.events_for(id).size()<1){
