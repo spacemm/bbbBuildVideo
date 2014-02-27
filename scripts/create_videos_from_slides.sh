@@ -4,5 +4,5 @@ lenght=$1
 text=$3
 name=$4
 mkdir -p /tmp/$id/slides
-ffmpeg -y -loop 1 -i $text -t $lenght -pix_fmt yuv420p /tmp/$id/slides/$id"_"$name.mp4
+ffmpeg -v quiet -y -loop 1 -i $text -t $lenght -pix_fmt yuv420p /tmp/$id/slides/$id"_"$name.mp4
 

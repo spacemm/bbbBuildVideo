@@ -26,7 +26,7 @@ public class bbbBuildVideo {
 
         Map<Long,String> chat = new HashMap<Long, String>();
         Map<Long,String> presentation = new HashMap<Long, String>();
-        Map<Long,String> slides = new HashMap<Long, String>();
+        //Map<Long,String> slides = new HashMap<Long, String>();
         Map<String,Long> videoStart= new HashMap<String,Long>();
         Map<String,Long> videoStop= new HashMap<String,Long>();
         Long startTime = (long) 0;
@@ -365,11 +365,11 @@ public class bbbBuildVideo {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        try {
+       /* try {
             runProcess.runNameTwoParams(concatwebcams, exe, id, String.valueOf(videoStart.size()));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        }*/
         List<Map<String, List<Long>>> slots = videoSlot(videoStart, videoStop,startTime,stopTime);
         if(slots.size()>6){
 
@@ -390,8 +390,22 @@ public class bbbBuildVideo {
                 args1.add(id);
                 args1.add(String.valueOf(c));
                 args1.add(String.valueOf(entry.getKey()));
-                args1.add(String.valueOf(((List<Long>) entry.getValue()).get(1) / 1000 - ((List<Long>) entry.getValue()).get(0) / 1000));
-                System.out.println(args1);
+                long stop;
+                if  (((List<Long>) entry.getValue()).get(1)==null) {
+                    stop=stopTime;
+                }
+                else {
+                    stop=((List<Long>) entry.getValue()).get(1);
+                }
+                long start;
+                if  (((List<Long>) entry.getValue()).get(0)==null) {
+                    start=startTime;
+                }
+                else{
+                    start=((List<Long>) entry.getValue()).get(0);
+                }
+                args1.add(String.valueOf(stop / 1000 - start / 1000));
+                System.out.println("args::"+args1);
                 ProcessBuilder pb = new ProcessBuilder(args1);
                 Process p = null;
                 try {
@@ -428,7 +442,7 @@ public class bbbBuildVideo {
         }
     }
     private static List<Map<String, List<Long>>> videoSlot(Map<String, Long> videoStart, Map<String, Long> videoStop,Long startTime, Long stopTime){
-        List<Map<String, List<Long>>> slots = new ArrayList();
+        List<Map<String, List<Long>>> slots = new ArrayList<>();
         while(videoStart.size()>0){
             Map<String,List<Long>> sVideoStart = new LinkedHashMap<String,List<Long>>();
             sVideoStart=sortByValue(videoStart);
