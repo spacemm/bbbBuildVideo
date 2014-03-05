@@ -9,6 +9,7 @@ public class bbbLoadRedis {
 
     /**
      * constructor: connect to Redis server and authorization
+     *
      * @param host
      * @param port
      */
@@ -21,24 +22,29 @@ public class bbbLoadRedis {
             ex.printStackTrace(System.err);
         }
     }
+
     public static Set<String> getAllKeys(String begin) {
-        return cli.keys(begin+"*");
+        return cli.keys(begin + "*");
     }
 
     /**
      * calculate keys count (eg count of active sessions)
+     *
      * @return
      */
     public static long getKeysCount() {
         return cli.dbSize();
     }
-    private static long num_events_for(String id){
-        return(cli.llen("meeting:" + id + ":recordings"));
+
+    private static long num_events_for(String id) {
+        return (cli.llen("meeting:" + id + ":recordings"));
     }
-    public static List<String> events_for(String id){
-        return(cli.lrange("meeting:" + id + ":recordings", 0, num_events_for(id)));
+
+    public static List<String> events_for(String id) {
+        return (cli.lrange("meeting:" + id + ":recordings", 0, num_events_for(id)));
     }
-    public static Map<String, String> events_info_for(String id,String event){
-        return(cli.hgetAll("recording:" + id + ":" + event));
+
+    public static Map<String, String> events_info_for(String id, String event) {
+        return (cli.hgetAll("recording:" + id + ":" + event));
     }
 }

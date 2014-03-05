@@ -10,7 +10,9 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by space on 2/21/14.
@@ -20,7 +22,7 @@ public class getDataFromJson {
 
     public static LinkedList<HashMap<String, String>> getLOG(String id) {
         try {
-            String pathToDump = "/tmp/" + id +"/"+id+ ".dump";
+            String pathToDump = "/tmp/" + id + "/" + id + ".dump";
             List<String> lines = Files.readAllLines(Paths.get(pathToDump), Charset.forName("UTF-8"));
             LinkedList<HashMap<String, String>> result = new LinkedList<>();
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class runProcess {
 
     private static void runIt(List<String> args1) throws IOException, InterruptedException {
@@ -24,18 +23,19 @@ public class runProcess {
 
     public static void runName(String name, String id, String exe) throws IOException, InterruptedException {
         List<String> args1 = new ArrayList<>();
-        String tmpPath="/tmp/";
+        String tmpPath = "/tmp/";
         args1.add(exe);
-        args1.add(tmpPath+name);
+        args1.add(tmpPath + name);
         args1.add(id);
         System.out.println(args1);
         runIt(args1);
     }
-    public static void runNameTwoParams(String name, String exe, String id,String param) throws IOException, InterruptedException {
+
+    public static void runNameTwoParams(String name, String exe, String id, String param) throws IOException, InterruptedException {
         List<String> args1 = new ArrayList<>();
-        String tmpPath="/tmp/";
+        String tmpPath = "/tmp/";
         args1.add(exe);
-        args1.add(tmpPath+name);
+        args1.add(tmpPath + name);
         args1.add(id);
         args1.add(param);
         System.out.println(args1);

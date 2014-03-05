@@ -3,16 +3,15 @@ import java.io.*;
 public class extractScripts {
 
 
-
-    public static void doIt(String name,String tmpPath) {
+    public static void doIt(String name, String tmpPath) {
 
         InputStream inputStream = null;
         OutputStream outputStream = null;
 
         try {
             // read this file into InputStream
-            String fullName = "scripts/"+name;
-            String outName = tmpPath+"/"+name;
+            String fullName = "scripts/" + name;
+            String outName = tmpPath + "/" + name;
             inputStream = bbbBuildVideo.class.getResourceAsStream(fullName);
             // write the inputStream to a FileOutputStream
             outputStream = new FileOutputStream(new File(outName));
