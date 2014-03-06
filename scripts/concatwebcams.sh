@@ -16,27 +16,27 @@ elif [[ "$count" == "1" ]];then
 elif [[ "$count" == "2" ]];then
     files=$(find $dir  -maxdepth 1 -type f -name res_\*.mp4)
     param=`echo $files|sed -e 's/ / -i /g'`
-    ffmpeg -y -i $param -filter_complex "[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w" $res
+    ffmpeg -v quiet -y -i $param -filter_complex "[0:v:0]pad=iw*2:ih[bg]; [bg][1:v:0]overlay=w" $res
     let k="240"
 elif [[ "$count" == "3" ]];then
     files=$(find $dir  -maxdepth 1 -type f -name res_\*.mp4)
     param=`echo $files|sed -e 's/ / -i /g'`
-    ffmpeg -y -i $param -filter_complex "[0:v]pad=iw*3:ih[l];[l][1:v]overlay=w[c];[c][2:v]overlay=w*2" $res
+    ffmpeg -v quiet -y -i $param -filter_complex "[0:v]pad=iw*3:ih[l];[l][1:v]overlay=w[c];[c][2:v]overlay=w*2" $res
     let k="240"
 elif [[ "$count" == "4" ]];then
     files=$(find $dir  -maxdepth 1 -type f -name res_\*.mp4)
     param=`echo $files|sed -e 's/ / -i /g'`
-    ffmpeg -y -i $param -filter_complex "[0:v]pad=iw*2:ih*2[tl];[tl][1:v]overlay=w[tr];[tr][2:v]overlay=0:h[bl];[bl][3:v]overlay=w:h" $res
+    ffmpeg -v quiet -y -i $param -filter_complex "[0:v]pad=iw*2:ih*2[tl];[tl][1:v]overlay=w[tr];[tr][2:v]overlay=0:h[bl];[bl][3:v]overlay=w:h" $res
     let k="240*2"
 elif [[ "$count" == "5" ]];then
     files=$(find $dir  -maxdepth 1 -type f -name res_\*.mp4)
     param=`echo $files|sed -e 's/ / -i /g'`
-    ffmpeg -y -i $param -filter_complex "[0:v]pad=iw*3:ih*2[tl];[tl][1:v]overlay=w[tc];[tc][2:v]overlay=w*2[tr];[tr][3:v]overlay=0:h[bl];[bl][4:v]overlay=w:h" $res
+    ffmpeg -v quiet -y -i $param -filter_complex "[0:v]pad=iw*3:ih*2[tl];[tl][1:v]overlay=w[tc];[tc][2:v]overlay=w*2[tr];[tr][3:v]overlay=0:h[bl];[bl][4:v]overlay=w:h" $res
     let k="240*2"
 elif [[ "$count" == "5" ]];then
     files=$(find $dir  -maxdepth 1 -type f -name res_\*.mp4)
     param=`echo $files|sed -e 's/ / -i /g'`
-    ffmpeg -y -i $param -filter_complex "[0:v]pad=iw*3:ih*2[tl];[tl][1:v]overlay=w[tc];[tc][2:v]overlay=w*2[tr];[tr][3:v]overlay=0:h[bl];[bl][4:v]overlay=w:h[bc];[bc][5:v]overlay=w*2:h" $res
+    ffmpeg -v quiet -y -i $param -filter_complex "[0:v]pad=iw*3:ih*2[tl];[tl][1:v]overlay=w[tc];[tc][2:v]overlay=w*2[tr];[tr][3:v]overlay=0:h[bl];[bl][4:v]overlay=w:h[bc];[bc][5:v]overlay=w*2:h" $res
     let k="240*2"
 fi
 let hi="600+$k"
