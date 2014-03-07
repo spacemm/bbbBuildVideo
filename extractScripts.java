@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.List;
 
 public class extractScripts {
 
@@ -45,6 +46,11 @@ public class extractScripts {
         }
 
 
+    }
+    public static void all(List<String> scripts,String tmpPath){
+        for ( String entry : scripts ){
+            extractScripts.doIt(entry, tmpPath);
+        }
     }
 }
 
