@@ -82,11 +82,26 @@ public class getDataFromJson {
     public static ArrayList sortList(ArrayList l){
          Collections.sort(l, new Comparator<HashMap<String, String>>(){
             public int compare(HashMap<String, String> one, HashMap<String, String> two) {
-                System.out.println(one.get("timestamp")+two.get("timestamp"));
+                //System.out.println(one.get("timestamp")+two.get("timestamp"));
                 return one.get("timestamp").compareTo(two.get("timestamp"));
             }
             });
         return l;
+    }
+
+    public static HashMap<String, ArrayList<HashMap<String, String>>> splitlist(ArrayList<HashMap<String, String>> l){
+        ArrayList<HashMap<String, String>> sublist = new ArrayList<>();
+        HashMap<String, ArrayList<HashMap<String, String>>> result = new HashMap<>();
+        for (HashMap map:l){
+            sublist.add(map);
+            if(map.containsKey("filename")&&map.containsValue("StopRecordingEvent")){
+                //System.out.println(sublist);
+                result.put((String) map.get("filename"),sublist);
+                sublist.clear();
+            }
+        }
+        System.out.println(result);
+        return result;
     }
 
 }

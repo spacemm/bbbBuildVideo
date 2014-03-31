@@ -54,8 +54,9 @@ public class bbbBuildVideo {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         ArrayList<HashMap<String, String>> dataList = getDataFromJson.getLOG(id);
-        System.out.println(dataList);
-        work(id, chat, presentation, videoStart, videoStop, startTime, stopTime, tmpPath, tmp, exe, concatwebcams, create_videos_from_text, create_videos_from_slides, addblacktovideo, concatwebcam, concatChat, concatSlides, convert_pdf_to_png, changeRESofVIDEO, dataList);
+        //System.out.println(dataList);
+        HashMap<String, ArrayList<HashMap<String, String>>> map = getDataFromJson.splitlist(dataList);
+        //work(id, chat, presentation, videoStart, videoStop, startTime, stopTime, tmpPath, tmp, exe, concatwebcams, create_videos_from_text, create_videos_from_slides, addblacktovideo, concatwebcam, concatChat, concatSlides, convert_pdf_to_png, changeRESofVIDEO, dataList);
     }
 
     private static void work(String id, Map<Long, String> chat, Map<Long, String> presentation, Map<String, Long> videoStart, Map<String, Long> videoStop, Long startTime, Long stopTime, String tmpPath, String tmp, String exe, String concatwebcams, String create_videos_from_text, String create_videos_from_slides, String addblacktovideo, String concatwebcam, String concatChat, String concatSlides, String convert_pdf_to_png, String changeRESofVIDEO, ArrayList<HashMap<String, String>> dataList) throws InterruptedException {
