@@ -10,9 +10,7 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by space on 2/21/14.
@@ -20,11 +18,11 @@ import java.util.List;
 
 public class getDataFromJson {
 
-    public static LinkedList<HashMap<String, String>> getLOG(String id) {
+    public static ArrayList<HashMap<String, String>> getLOG(String id) {
         try {
             String pathToDump = "/tmp/" + id + "/" + id + ".dump";
             List<String> lines = Files.readAllLines(Paths.get(pathToDump), Charset.forName("UTF-8"));
-            LinkedList<HashMap<String, String>> result = new LinkedList<>();
+            ArrayList<HashMap<String, String>> result = new ArrayList<>();
 
             for (String line : lines) {
                 line = line.replaceFirst(".*value\\\":\\{", "");
@@ -64,11 +62,15 @@ public class getDataFromJson {
                             value = "";
                         }
                     }
+
                     //System.out.println(map);
-                    result.add(map);
+                    if(!result.contains(map)&&map.containsKey("timestamp")){
+                        result.add(map);
+                    }
                 }
             }
-            return result;
+            return sortList(result);
+            /*return result;*/
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -76,4 +78,15 @@ public class getDataFromJson {
         }
         return null;
     }
+
+    public static ArrayList sortList(ArrayList l){
+         Collections.sort(l, new Comparator<HashMap<String, String>>(){
+            public int compare(HashMap<String, String> one, HashMap<String, String> two) {
+                System.out.println(one.get("timestamp")+two.get("timestamp"));
+                return one.get("timestamp").compareTo(two.get("timestamp"));
+            }
+            });
+        return l;
+    }
+
 }
