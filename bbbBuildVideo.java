@@ -48,14 +48,14 @@ public class bbbBuildVideo {
         extractScripts.doIt(convert_pdf_to_png, "/tmp/");
         extractScripts.doIt(changeRESofVIDEO, "/tmp/");
 
-        try {
+       /* try {
             runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.221");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        }*/
         ArrayList<HashMap<String, String>> dataList = getDataFromJson.getLOG(id);
-        //System.out.println(dataList);
         HashMap<String, ArrayList<HashMap<String, String>>> map = getDataFromJson.splitlist(dataList);
+        //System.out.println(dataList);
         //work(id, chat, presentation, videoStart, videoStop, startTime, stopTime, tmpPath, tmp, exe, concatwebcams, create_videos_from_text, create_videos_from_slides, addblacktovideo, concatwebcam, concatChat, concatSlides, convert_pdf_to_png, changeRESofVIDEO, dataList);
     }
 

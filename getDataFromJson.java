@@ -90,16 +90,28 @@ public class getDataFromJson {
     }
 
     public static HashMap<String, ArrayList<HashMap<String, String>>> splitlist(ArrayList<HashMap<String, String>> l){
+        System.out.println(l);
         ArrayList<HashMap<String, String>> sublist = new ArrayList<>();
         HashMap<String, ArrayList<HashMap<String, String>>> result = new HashMap<>();
-        for (HashMap map:l){
-            sublist.add(map);
-            if(map.containsKey("filename")&&map.containsValue("StopRecordingEvent")){
-                //System.out.println(sublist);
-                result.put((String) map.get("filename"),sublist);
+        Integer timestamp=0;
+        for (HashMap<String, String> map:l){
+            if((map.getValue("timestamp")-timestamp)>5){
+                sublist.add(map);
+            }
+            timestamp=map.getValue("timestamp")
+            System.out.println("sublist.size :: " + sublist.size());
+            //System.out.println("SUBLIST");
+            //System.out.println(sublist);
+            if(map.containsKey("filename") && map.containsValue("StopRecordingEvent")){
+
+                System.out.println("------------------------------------------------------");
+                result.put(map.get("filename"),sublist);
+                //System.out.println(result);
+                System.out.println("result.size :: " + result.size());
                 sublist.clear();
             }
         }
+        System.out.println("RESULT");
         System.out.println(result);
         return result;
     }
