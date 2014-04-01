@@ -32,7 +32,7 @@ public class bbbBuildVideo {
         String concatSlides = "concatSlides.sh";
         String convert_pdf_to_png = "convert_pdf_to_png.sh";
         String changeRESofVIDEO = "changeRESofVIDEO.sh";
-
+        String buildcam="buildcam.sh";
         extractScripts.doIt(concatChat, "/tmp/");
         extractScripts.doIt(concatSlides, "/tmp/");
         extractScripts.doIt(create_videos_from_text, "/tmp/");
@@ -42,9 +42,11 @@ public class bbbBuildVideo {
         extractScripts.doIt(create_videos_from_slides, "/tmp/");
         extractScripts.doIt(convert_pdf_to_png, "/tmp/");
         extractScripts.doIt(changeRESofVIDEO, "/tmp/");
+        //extractScripts.doIt(buildcam, "/tmp/");
 
-  /*      try {
-            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.221");
+
+        try {
+            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.80");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -52,7 +54,7 @@ public class bbbBuildVideo {
             runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, "320x240");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }*/
+        }
         ArrayList<HashMap<String, String>> dataList = getDataFromJson.getLOG(id);
         //System.out.println(l);
         ArrayList<HashMap<String, String>> sublist = new ArrayList<>();
@@ -408,6 +410,7 @@ public class bbbBuildVideo {
             System.exit(1);
         }
         Integer k = 0;
+        System.out.println(slots + "               " + slots.size());
         for (Map<String, List<Long>> slot : slots) {
             System.out.println(slot);
             Integer c = 0;

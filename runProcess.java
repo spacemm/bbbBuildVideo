@@ -13,9 +13,9 @@ public class runProcess {
         pb.redirectErrorStream(true);
         pb.redirectInput(ProcessBuilder.Redirect.PIPE); //optional, default behavior
         pb.redirectOutput(encodingFile);
-        //pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         Process p;
-        //pb.inheritIO();
+        pb.inheritIO();
         p = pb.start();
         p.waitFor();
         encodingFile.delete();
@@ -45,6 +45,7 @@ public class runProcess {
         List<String> args1 = new ArrayList<>();
         String tmpPath = "/tmp/";
         args1.add(exe);
+        args1.add("-x");
         args1.add(tmpPath + name);
         args1.add(id);
         args1.add(param);
