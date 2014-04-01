@@ -13,12 +13,7 @@ public class bbbBuildVideo {
                 return;
             }
         }
-        Map<Long, String> chat = new HashMap<Long, String>();
-        Map<Long, String> presentation = new HashMap<Long, String>();
-        Map<String, Long> videoStart = new HashMap<String, Long>();
-        Map<String, Long> videoStop = new HashMap<String, Long>();
-        Long startTime = (long) 0;
-        Long stopTime = (long) 0;
+
         String tmpPath = "/tmp/";
         String tmp = "/tmp/" + id + "/";
         String exe = "/bin/sh";
@@ -48,19 +43,64 @@ public class bbbBuildVideo {
         extractScripts.doIt(convert_pdf_to_png, "/tmp/");
         extractScripts.doIt(changeRESofVIDEO, "/tmp/");
 
-       /* try {
+  /*      try {
             runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.221");
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        try {
+            runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, "320x240");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }*/
         ArrayList<HashMap<String, String>> dataList = getDataFromJson.getLOG(id);
-        HashMap<String, ArrayList<HashMap<String, String>>> map = getDataFromJson.splitlist(dataList);
+        //System.out.println(l);
+        ArrayList<HashMap<String, String>> sublist = new ArrayList<>();
+        HashMap<String, ArrayList<HashMap<String, String>>> result = new HashMap<String, ArrayList<HashMap<String, String>>>();
+        Long timestampOld = 0L;
+        for (HashMap<String, String> map : dataList) {
+            String timestamp = "";
+            for (Map.Entry entry : map.entrySet()) {
+                if (entry.getKey().toString().equalsIgnoreCase("timestamp")) {
+                    timestamp = entry.getValue().toString();
+                }
+            }
+
+            if ((Long.parseLong(timestamp) - timestampOld) > 5) {
+                sublist.add(map);
+                timestampOld = Long.parseLong(timestamp);
+
+                //System.out.println("sublist.size :: " + sublist.size());
+                //System.out.println("SUBLIST");
+                //System.out.println(sublist);
+                if (map.containsKey("filename") && map.containsValue("StopRecordingEvent")) {
+                    System.out.println("sublist.size :: " + sublist.size());
+                    System.out.println("WORK");
+                    work(id, tmpPath, tmp, exe, concatwebcams, create_videos_from_text, create_videos_from_slides, addblacktovideo, concatwebcam, concatChat, concatSlides, convert_pdf_to_png, changeRESofVIDEO, sublist);
+                    sublist.clear();
+                }
+
+
+            }
+        }
+
+
+}
+        //splitlist(dataList);
         //System.out.println(dataList);
         //work(id, chat, presentation, videoStart, videoStop, startTime, stopTime, tmpPath, tmp, exe, concatwebcams, create_videos_from_text, create_videos_from_slides, addblacktovideo, concatwebcam, concatChat, concatSlides, convert_pdf_to_png, changeRESofVIDEO, dataList);
-    }
+    //}
 
-    private static void work(String id, Map<Long, String> chat, Map<Long, String> presentation, Map<String, Long> videoStart, Map<String, Long> videoStop, Long startTime, Long stopTime, String tmpPath, String tmp, String exe, String concatwebcams, String create_videos_from_text, String create_videos_from_slides, String addblacktovideo, String concatwebcam, String concatChat, String concatSlides, String convert_pdf_to_png, String changeRESofVIDEO, ArrayList<HashMap<String, String>> dataList) throws InterruptedException {
+
+    private static void work(String id, String tmpPath, String tmp, String exe, String concatwebcams, String create_videos_from_text, String create_videos_from_slides, String addblacktovideo, String concatwebcam, String concatChat, String concatSlides, String convert_pdf_to_png, String changeRESofVIDEO, ArrayList<HashMap<String, String>> dataList) throws InterruptedException {
+        Map<Long, String> chat = new HashMap<Long, String>();
+        Map<Long, String> presentation = new HashMap<Long, String>();
+        Map<String, Long> videoStart = new HashMap<String, Long>();
+        Map<String, Long> videoStop = new HashMap<String, Long>();
+        Long startTime = (long) 0;
+        Long stopTime = (long) 0;
         String wavFile = "";
+        System.out.println(dataList.size());
         for (HashMap<String, String> map : dataList) {
             //System.out.println(map);
             if (map.containsKey("filename")) {
@@ -71,8 +111,8 @@ public class bbbBuildVideo {
                         System.out.println("wav" + wavFile);
                     }
                 }
-                chat.put(startTime, " ");
-                presentation.put(startTime, "0");
+                //chat.put(startTime, " ");
+                //presentation.put(startTime, "0");
             }
             if (map.containsKey("eventName") && map.containsValue("StartRecordingEvent")) {
                 System.out.println("MAP::" + map);
@@ -184,9 +224,13 @@ public class bbbBuildVideo {
         Double totallong = (Double.valueOf(stopTime) - Double.valueOf(startTime)) / 1000.0;
         TreeMap<Long, String> sorted_presentation = new TreeMap<Long, String>(presentation);
         sorted_presentation.putAll(presentation);
-        System.out.println(sorted_presentation);
         TreeMap<Long, String> sorted_chat = new TreeMap<Long, String>(chat);
         sorted_chat.putAll(chat);
+        System.out.println("STARTTIME:::::::"+startTime+"STOPTIME:::::::::::"+stopTime);
+        System.out.println("CHAT:::::::"+sorted_chat);
+        System.out.println("VIDEOSTART:::::::"+videoStart);
+        System.out.println("VIDEOSTOP:::::::"+videoStop);
+        System.out.println("PRESENT:::::::"+sorted_presentation);
         float lenght = (float) 0.0;
         long currentTime = (long) 0.0;
         String msg = "";
@@ -279,11 +323,7 @@ public class bbbBuildVideo {
             currentTime = Long.valueOf(entry.getKey().toString());
         }
         //Add black to video from begin
-        try {
-            runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, "320x240");
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+
         for (Map.Entry entry : videoStart.entrySet()) {
             String name = String.valueOf(entry.getKey());
             String lenghtS = String.valueOf((Long.valueOf(String.valueOf(entry.getValue())) - startTime) / 1000.0);
@@ -423,7 +463,7 @@ public class bbbBuildVideo {
 
         }
         try {
-            runProcess.runNameTwoParams(concatwebcams, exe, id, String.valueOf(slots.size()));
+            runProcess.runName3Params(concatwebcams, exe, id, String.valueOf(slots.size()), wavFile);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

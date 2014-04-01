@@ -3,12 +3,16 @@ id=$1
 count=$2
 dir=/tmp/$id
 res=$dir/webcams.mp4
+full_wav=$3
+wav=`basename $full_wav`
+name=`echo $wav | awk -F '.' '{print $1}'`
 ffmpeg -v quiet -y -i $dir/slides/output.mp4 -vf "pad=1120:600:0:0:white" $dir/left.mp4
 ffmpeg -v quiet -y -i $dir/left.mp4 -vf "movie='$dir/chat/chat.mp4' [mv]; [in][mv] overlay=800:0" $dir/top.mp4
 #ffmpeg -v quiet -y -i $dir/top.mp4 -vf "pad=1120:840:0:0:black" $dir/notlast.mp4
 if [[ "$count" == "0" ]];then
     cp $dir/top.mp4 $dir/result.mp4
-    ffmpeg -v quiet -y -i $dir/result.mp4 -i $dir/$id*wav $dir/final.mp4
+    ffmpeg -v quiet -y -i $dir/result.mp4 -i $dir/$wav $dir/$name'.mp4'
+    #ffmpeg -v quiet -y -i $dir/result.mp4 -i $dir/$id*wav $dir/final.mp4
     exit 0
 elif [[ "$count" == "1" ]];then
     cp $dir/res_*.mp4 $res
@@ -42,7 +46,7 @@ fi
 let hi="600+$k"
 ffmpeg -v quiet -y -i $dir/top.mp4 -vf "pad=1120:$hi:0:0:white" $dir/notlast.mp4
 ffmpeg -v quiet -y -i $dir/notlast.mp4 -vf "movie='$res' [mv]; [in][mv] overlay=0:600" $dir/result.mp4
-ffmpeg -v quiet -y -i $dir/result.mp4 -i $dir/$id*wav $dir/final.mp4
+ffmpeg -v quiet -y -i $dir/result.mp4 -i $dir/$wav $dir/$name'.mp4'
 
 
 

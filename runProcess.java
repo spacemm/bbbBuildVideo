@@ -41,5 +41,16 @@ public class runProcess {
         System.out.println(args1);
         runIt(args1);
     }
+    public static void runName3Params(String name, String exe, String id, String param, String param2) throws IOException, InterruptedException {
+        List<String> args1 = new ArrayList<>();
+        String tmpPath = "/tmp/";
+        args1.add(exe);
+        args1.add(tmpPath + name);
+        args1.add(id);
+        args1.add(param);
+        args1.add(param2);
+        System.out.println(args1);
+        runIt(args1);
+    }
 
 }

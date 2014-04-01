@@ -3,9 +3,9 @@ id=$1
 server=$2
 tmp=/tmp/$id
 mkdir -p $tmp/slides
+scp -r root@$server:/var/bigbluebutton/dump/$id.dump $tmp
 scp -r root@$server:/usr/share/red5/webapps/video/streams/$id/* $tmp
 scp -r root@$server:/var/bigbluebutton/$id/$id/* $tmp/slides/
 scp -r root@$server:/var/freeswitch/meetings/$id* $tmp
-scp -r root@$server:/var/bigbluebutton/dump/$id.dump $tmp
 convert -size 320x240 xc:white /tmp/black.png
 
