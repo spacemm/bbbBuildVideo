@@ -25,6 +25,7 @@ public class runProcess {
         List<String> args1 = new ArrayList<>();
         String tmpPath = "/tmp/";
         args1.add(exe);
+        args1.add("-x");
         args1.add(tmpPath + name);
         args1.add(id);
         System.out.println(args1);
@@ -35,6 +36,7 @@ public class runProcess {
         List<String> args1 = new ArrayList<>();
         String tmpPath = "/tmp/";
         args1.add(exe);
+        args1.add("-x");
         args1.add(tmpPath + name);
         args1.add(id);
         args1.add(param);

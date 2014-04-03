@@ -49,7 +49,7 @@ let hi="600+$k"
 ffmpeg -v quiet -y -i $dir/top.mp4 -vf "pad=1120:$hi:0:0:white" $dir/notlast.mp4
 ffmpeg -v quiet -y -i $dir/notlast.mp4 -vf "movie='$res' [mv]; [in][mv] overlay=0:600" $dir/result.mp4
 ffmpeg -v quiet -y -i $dir/result.mp4 -i $dir/$wav $dir/$name'.mp4'
-exit 1
+#exit 1
 rm $dir/RR_*.mp4
 rm $dir/left.mp4
 rm $dir/top.mp4

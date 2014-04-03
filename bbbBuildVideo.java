@@ -46,7 +46,7 @@ public class bbbBuildVideo {
 
 
         try {
-            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.80");
+            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.221");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -233,6 +233,7 @@ public class bbbBuildVideo {
         System.out.println("VIDEOSTART:::::::"+videoStart);
         System.out.println("VIDEOSTOP:::::::"+videoStop);
         System.out.println("PRESENT:::::::"+sorted_presentation);
+        List<Map<String, List<Long>>> slots = videoSlot.doIt(videoStart, videoStop, startTime, stopTime);
         float lenght = (float) 0.0;
         long currentTime = (long) 0.0;
         String msg = "";
@@ -401,7 +402,6 @@ public class bbbBuildVideo {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-        List<Map<String, List<Long>>> slots = videoSlot.doIt(videoStart, videoStop, startTime, stopTime);
         if (slots.size() > 6) {
 
             System.out.println("Too much parallel videos");
