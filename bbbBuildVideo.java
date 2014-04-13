@@ -32,7 +32,8 @@ public class bbbBuildVideo {
         String concatSlides = "concatSlides.sh";
         String convert_pdf_to_png = "convert_pdf_to_png.sh";
         String changeRESofVIDEO = "changeRESofVIDEO.sh";
-        String buildcam="buildcam.sh";
+        String buildcam="buidcam.sh";
+        //extractScripts.doIt(buildcam, "/tmp/");
         extractScripts.doIt(concatChat, "/tmp/");
         extractScripts.doIt(concatSlides, "/tmp/");
         extractScripts.doIt(create_videos_from_text, "/tmp/");
@@ -42,16 +43,10 @@ public class bbbBuildVideo {
         extractScripts.doIt(create_videos_from_slides, "/tmp/");
         extractScripts.doIt(convert_pdf_to_png, "/tmp/");
         extractScripts.doIt(changeRESofVIDEO, "/tmp/");
-        //extractScripts.doIt(buildcam, "/tmp/");
 
 
         try {
-            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.221");
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        try {
-            runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, "320x240");
+            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.80");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -234,6 +229,22 @@ public class bbbBuildVideo {
         System.out.println("VIDEOSTOP:::::::"+videoStop);
         System.out.println("PRESENT:::::::"+sorted_presentation);
         List<Map<String, List<Long>>> slots = videoSlot.doIt(videoStart, videoStop, startTime, stopTime);
+        System.out.print(slots);
+        String resoulutinWebcams="";
+        if (slots.size()<2){
+            resoulutinWebcams="640x480";
+            System.out.print(resoulutinWebcams);
+        }
+        else {
+            resoulutinWebcams="320x240";
+            System.out.print(resoulutinWebcams);
+        }
+        try {
+            runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, resoulutinWebcams);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
         float lenght = (float) 0.0;
         long currentTime = (long) 0.0;
         String msg = "";
@@ -275,7 +286,7 @@ public class bbbBuildVideo {
         System.out.println(sorted_presentation);
         String dir = tmp + "slides/" + "default";
         try {
-            runProcess.runNameTwoParams(convert_pdf_to_png, exe, id, "800x600");
+            runProcess.runNameTwoParams(convert_pdf_to_png, exe, id, "1270x1080");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -338,6 +349,7 @@ public class bbbBuildVideo {
                 args1.add(tmp);
                 args1.add(name + ".mp4");
                 args1.add(lenghtS);
+                args1.add(resoulutinWebcams);
                 System.out.println(args1);
                 ProcessBuilder pb = new ProcessBuilder(args1);
                 Process p = null;
@@ -361,6 +373,7 @@ public class bbbBuildVideo {
                 args1.add(tmp);
                 args1.add(name + ".mp4");
                 args1.add(lenghtS);
+                args1.add(resoulutinWebcams);
                 System.out.println(args1);
                 ProcessBuilder pb = new ProcessBuilder(args1);
                 Process p = null;

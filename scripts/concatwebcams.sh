@@ -6,14 +6,18 @@ res=$dir/webcams.mp4
 full_wav=$3
 wav=`basename $full_wav`
 name=`echo $wav | awk -F '.' '{print $1}'`
-ffmpeg -v quiet -y -i $dir/slides/output.mp4 -vf "pad=1120:600:0:0:white" $dir/left.mp4
-ffmpeg -v quiet -y -i $dir/left.mp4 -vf "movie='$dir/chat/chat.mp4' [mv]; [in][mv] overlay=800:0" $dir/top.mp4
+ffmpeg -v quiet -y -i $dir/slides/output.mp4 -vf "pad=1920:1080:0:0:gray" $dir/left.mp4
+ffmpeg -v quiet -y -i $dir/RR_0.mp4 -vf "pad=640:1080:0:0:gray" $dir/r-c.mp4
+ffmpeg -v quiet -y -i $dir/r-c.mp4 -vf "movie='$dir/chat/chat.mp4' [mv]; [in][mv] overlay=0:490" $dir/r.mp4
+ffmpeg -v quiet -y -i $dir/left.mp4 -vf "movie='$dir/r.mp4' [mv]; [in][mv] overlay=1280:0" $dir/newres.mp4
+#ffmpeg -v quiet -y -i $dir/left.mp4 -vf "movie='$dir/chat/chat.mp4' [mv]; [in][mv] overlay=800:0" $dir/top.mp4
 #ffmpeg -v quiet -y -i $dir/top.mp4 -vf "pad=1120:840:0:0:black" $dir/notlast.mp4
+
 if [[ "$count" == "0" ]];then
     cp $dir/top.mp4 $dir/result.mp4
 elif [[ "$count" == "1" ]];then
     cp $dir/RR_0.mp4 $res
-    let k="240"
+    let k="480"
 elif [[ "$count" == "2" ]];then
     #files=$(find $dir  -maxdepth 1 -type f -name RR_\*.mp4)
     #param=`echo $files|sed -e 's/ / -i /g'`
@@ -46,10 +50,10 @@ elif [[ "$count" == "5" ]];then
     let k="240*2"
 fi
 let hi="600+$k"
-ffmpeg -v quiet -y -i $dir/top.mp4 -vf "pad=1120:$hi:0:0:white" $dir/notlast.mp4
-ffmpeg -v quiet -y -i $dir/notlast.mp4 -vf "movie='$res' [mv]; [in][mv] overlay=0:600" $dir/result.mp4
-ffmpeg -v quiet -y -i $dir/result.mp4 -i $dir/$wav $dir/$name'.mp4'
-#exit 1
+#ffmpeg -v quiet -y -i $dir/top.mp4 -vf "pad=1120:$hi:0:0:white" $dir/notlast.mp4
+#ffmpeg -v quiet -y -i $dir/notlast.mp4 -vf "movie='$res' [mv]; [in][mv] overlay=0:600" $dir/result.mp4
+ffmpeg -v quiet -y -i $dir/newres.mp4 -i $dir/$wav $dir/$name'.mp4'
+exit 1
 rm $dir/RR_*.mp4
 rm $dir/left.mp4
 rm $dir/top.mp4

@@ -9,7 +9,7 @@ $text
 EOF
 tr -d '\r' < $path/chat/text.txt > $path/chat/ready_text.txt
 cat $path/chat/ready_text.txt |convert \
-    -size 320x600 \
+    -size 640x590 \
     -font DejaVu-Sans \
     -pointsize 12 \
     -fill black \
