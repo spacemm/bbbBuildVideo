@@ -33,7 +33,7 @@ public class bbbBuildVideo {
         String convert_pdf_to_png = "convert_pdf_to_png.sh";
         String changeRESofVIDEO = "changeRESofVIDEO.sh";
         String buildcam="buidcam.sh";
-        //extractScripts.doIt(buildcam, "/tmp/");
+        extractScripts.doIt(buildcam, "/tmp/");
         extractScripts.doIt(concatChat, "/tmp/");
         extractScripts.doIt(concatSlides, "/tmp/");
         extractScripts.doIt(create_videos_from_text, "/tmp/");

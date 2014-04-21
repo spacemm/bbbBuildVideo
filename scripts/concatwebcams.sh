@@ -27,27 +27,35 @@ elif [[ "$count" == "2" ]];then
 elif [[ "$count" == "3" ]];then
     #files=$(find $dir  -maxdepth 1 -type f -name RR_\*.mp4)
     #param=`echo $files|sed -e 's/ / -i /g'`
+    ffmpeg -y -i RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -filter_complex "[0:v]pad=iw*2:ih*2[tl];[tl][1:v]overlay=w[tr];[tr][2:v]overlay=0:h" k.mp4
     param="RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4"
     ffmpeg -v quiet -y -i $param -filter_complex "[0:v]pad=iw*3:ih[l];[l][1:v]overlay=w[c];[c][2:v]overlay=w*2" $res
     let k="240"
 elif [[ "$count" == "4" ]];then
     #files=$(find $dir  -maxdepth 1 -type f -name RR_\*.mp4)
     #param=`echo $files|sed -e 's/ / -i /g'`
+    ffmpeg -y -i RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4 -filter_complex "[0:v]pad=iw*2:ih*2[tl];[tl][1:v]overlay=w[tr];[tr][2:v]overlay=0:h[bl];[bl][3:v]overlay=w:h" k.mp4
     param="RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4"
     ffmpeg -v quiet -y -i $param -filter_complex "[0:v]pad=iw*2:ih*2[tl];[tl][1:v]overlay=w[tr];[tr][2:v]overlay=0:h[bl];[bl][3:v]overlay=w:h" $res
     let k="240*2"
 elif [[ "$count" == "5" ]];then
     #files=$(find $dir  -maxdepth 1 -type f -name RR_\*.mp4)
     #param=`echo $files|sed -e 's/ / -i /g'`
+    ffmpeg -y -i RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4 -i RR_4.mp4 -filter_complex "[0:v]pad=iw*2:ih*3[tr];[tr][1:v]overlay=w[cl];[cl][2:v]overlay=0:h[bl];[bl][3:v]overlay=w:h[br];[br][4:v]overlay=0:h*2" k.mp4
     param="RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4 -i RR_4.mp4"
     ffmpeg -v quiet -y -i $param -filter_complex "[0:v]pad=iw*3:ih*2[tl];[tl][1:v]overlay=w[tc];[tc][2:v]overlay=w*2[tr];[tr][3:v]overlay=0:h[bl];[bl][4:v]overlay=w:h" $res
     let k="240*2"
-elif [[ "$count" == "5" ]];then
+elif [[ "$count" == "6" ]];then
     #files=$(find $dir  -maxdepth 1 -type f -name RR_\*.mp4)
     #param=`echo $files|sed -e 's/ / -i /g'`
+    ffmpeg -y -i RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4 -i RR_4.mp4 -i RR_5.mp4 -filter_complex "[0:v]pad=iw*2:ih*3[tr];[tr][1:v]overlay=w[cl];[cl][2:v]overlay=0:h[cr];[cr][3:v]overlay=w:h[bl];[bl][4:v]overlay=0:h*2[br];[br][5:v]overlay=w:h*2" k.mp4
     param="RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4 -i RR_4.mp4 -i RR_5.mp4"
     ffmpeg  -v quiet -y -i $param -filter_complex "[0:v]pad=iw*3:ih*2[tl];[tl][1:v]overlay=w[tc];[tc][2:v]overlay=w*2[tr];[tr][3:v]overlay=0:h[bl];[bl][4:v]overlay=w:h[bc];[bc][5:v]overlay=w*2:h" $res
     let k="240*2"
+    7
+    ffmpeg -y -i RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4 -i RR_4.mp4 -i RR_5.mp4 -i RR_6.mp4 -filter_complex "[0:v]pad=iw*2:ih*4[tr];[tr][1:v]overlay=w[cl];[cl][2:v]overlay=0:h[cr];[cr][3:v]overlay=w:h[bl];[bl][4:v]overlay=0:h*2[br];[br][5:v]overlay=w:h*2[bbl];[bbl][6:v]overlay=0:h*3" k.mp4
+    8
+    ffmpeg -y -i RR_0.mp4 -i RR_1.mp4 -i RR_2.mp4 -i RR_3.mp4 -i RR_4.mp4 -i RR_5.mp4 -i RR_6.mp4 -i RR_7.mp4 -filter_complex "[0:v]pad=iw*2:ih*4[tr];[tr][1:v]overlay=w[cl];[cl][2:v]overlay=0:h[cr];[cr][3:v]overlay=w:h[bl];[bl][4:v]overlay=0:h*2[br];[br][5:v]overlay=w:h*2[bbl];[bbl][6:v]overlay=0:h*3[bbr];[bbr][7:v]overlay=w:h*3" k.mp4
 fi
 let hi="600+$k"
 #ffmpeg -v quiet -y -i $dir/top.mp4 -vf "pad=1120:$hi:0:0:white" $dir/notlast.mp4

@@ -19,10 +19,17 @@ public class extractScripts {
 
             int read = 0;
             byte[] bytes = new byte[1024];
+            //System.out.println(bytes);
+            //System.out.println(inputStream.read(bytes));
 
+            try {
             while ((read = inputStream.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, read);
             }
+            }
+            catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         } catch (IOException e) {
             e.printStackTrace();
