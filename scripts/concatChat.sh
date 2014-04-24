@@ -1,5 +1,6 @@
 #!/bin/bash
 id=$1
+mkdir -p /tmp/$id/chat/
 cd /tmp/$id/chat/
 rm -rf chat.mp4
 find . -name \*.mp4 -exec echo file '{}' \; > files.list

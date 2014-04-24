@@ -46,7 +46,7 @@ public class bbbBuildVideo {
 
 
         try {
-            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.80");
+            runProcess.runNameTwoParams(getdata, exe, id, "192.168.11.221");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -99,6 +99,16 @@ public class bbbBuildVideo {
         String wavFile = "";
         System.out.println(dataList.size());
         for (HashMap<String, String> map : dataList) {
+            if(startTime==0){
+              for (Map.Entry entry : map.entrySet()) {
+                    if (entry.getKey().toString().equalsIgnoreCase("timestamp")) {
+                        startTime = Long.valueOf(entry.getValue().toString());
+                        System.out.println("time" + startTime);
+                    }
+            }
+                chat.put(startTime, " ");
+                presentation.put(startTime, "0");
+            }
             //System.out.println(map);
             if (map.containsKey("filename")) {
                 System.out.println("File::" + map);
@@ -230,17 +240,23 @@ public class bbbBuildVideo {
         System.out.println("PRESENT:::::::"+sorted_presentation);
         List<Map<String, List<Long>>> slots = videoSlot.doIt(videoStart, videoStop, startTime, stopTime);
         System.out.print(slots);
-        String resoulutinWebcams="";
+        String resolutinWebcams="";
+        String resolutionChat="";
+        String resoloutionPdf="";
         if (slots.size()<2){
-            resoulutinWebcams="640x480";
-            System.out.print(resoulutinWebcams);
+            resolutinWebcams="640x480";
+            resolutionChat="640x590";
+            resoloutionPdf="1280x1080";
+            System.out.print(resolutinWebcams);
         }
         else {
-            resoulutinWebcams="320x240";
-            System.out.print(resoulutinWebcams);
+            resolutinWebcams="320x240";
+            resolutionChat="320x1080";
+            resoloutionPdf="960x1080";
+            System.out.print(resolutinWebcams);
         }
         try {
-            runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, resoulutinWebcams);
+            runProcess.runNameTwoParams(changeRESofVIDEO, exe, id, resolutinWebcams);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -261,6 +277,7 @@ public class bbbBuildVideo {
                     args1.add(tmp);
                     args1.add(msg);
                     args1.add(String.valueOf(currentTime));
+                    args1.add(resolutionChat);
                     System.out.println(args1);
                     ProcessBuilder pb = new ProcessBuilder(args1);
                     Process p = pb.start();
@@ -286,7 +303,7 @@ public class bbbBuildVideo {
         System.out.println(sorted_presentation);
         String dir = tmp + "slides/" + "default";
         try {
-            runProcess.runNameTwoParams(convert_pdf_to_png, exe, id, "1270x1080");
+            runProcess.runNameTwoParams(convert_pdf_to_png, exe, id, resoloutionPdf);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -349,7 +366,7 @@ public class bbbBuildVideo {
                 args1.add(tmp);
                 args1.add(name + ".mp4");
                 args1.add(lenghtS);
-                args1.add(resoulutinWebcams);
+                args1.add(resolutinWebcams);
                 System.out.println(args1);
                 ProcessBuilder pb = new ProcessBuilder(args1);
                 Process p = null;
@@ -373,7 +390,7 @@ public class bbbBuildVideo {
                 args1.add(tmp);
                 args1.add(name + ".mp4");
                 args1.add(lenghtS);
-                args1.add(resoulutinWebcams);
+                args1.add(resolutinWebcams);
                 System.out.println(args1);
                 ProcessBuilder pb = new ProcessBuilder(args1);
                 Process p = null;
@@ -415,7 +432,7 @@ public class bbbBuildVideo {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-        if (slots.size() > 6) {
+        if (slots.size() > 8) {
 
             System.out.println("Too much parallel videos");
             System.out.println(slots + "               " + slots.size());
